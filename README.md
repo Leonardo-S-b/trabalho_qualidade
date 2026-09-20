@@ -7,16 +7,15 @@ Atividades da Unidade Curricular Qualidade de Software, desenvolvidas por Leonar
 Modalidade atual: individual. Data da exploração: 20/09/2026.
 
 - [Atividade 1 — Fundamentos e Características da Qualidade](atividades/atividade-01/atividade-01-fundamentos-qualidade.md)
-- [Índice das evidências](atividades/atividade-01/evidencias/README.md)
+- [Índice das evidências da Atividade 1](atividades/atividade-01/evidencias/README.md)
+- [Atividade 2 — Organização da Qualidade](atividades/atividade-02/atividade-02-papeis-responsabilidades.md)
 
 | Atividade | Situação |
 |---|---|
 | 1 — Fundamentos e Características da Qualidade | Documentada; identificação da turma pendente. |
-| 2 | A desenvolver conforme o enunciado do professor. |
+| 2 — Organização da Qualidade | Documentada; identificação da turma pendente. |
 | 3 | A desenvolver conforme o enunciado do professor. |
 
 Aplicação: <https://local-eats-unisenac.vercel.app/>
 
-Modelo disponibilizado pelo professor: <https://github.com/lucianozanuz/pbl-qualidade-software-2026-2/blob/main/atividades/atividade-01/atividade-01-fundamentos-qualidade.md>
-
-As capturas são registros da exploração realizada pelo estudante. Não foram executados testes automatizados. A identificação da turma ainda precisa ser preenchida no documento.
+As capturas são registros da exploração realizada pelo estudante. Não foram executados testes automatizados. A identificação da turma ainda precisa ser preenchida nos documentos.
