@@ -65,7 +65,7 @@ Verificar se o LocalEats permite criar pedidos somente com quantidades válidas 
 
 | ID | Integrante | Funcionalidade | Risco | Consequência | Probabilidade | Impacto | Prioridade | Justificativa |
 |---|---|---|---|---|---|---|---|---|
-| R01 | Leonardo Souza Bezerra | Fazer pedido | O sistema aceitar quantidade inválida, como zero, negativa, fracionada ou texto que não corresponda ao formato esperado. | Usuário e restaurante podem receber um pedido inconsistente, com erro de cálculo, preparo ou registro. | Média | Alta | Alta | A quantidade é dado essencial do pedido. A exploração anterior mostrou validações para alguns casos; ainda assim, entradas alternativas podem chegar diretamente à API e precisam ser cobertas. |
+| R01 | Leonardo Souza Bezerra | Fazer pedido | O sistema aceitar quantidade inválida, como zero, negativa, fracionada ou texto não numérico. | Usuário e restaurante podem receber um pedido inconsistente, com erro de cálculo, preparo ou registro. | Média | Alta | Alta | A quantidade é dado essencial do pedido. A exploração anterior mostrou validações para alguns casos; ainda assim, entradas alternativas podem chegar diretamente à API e precisam ser cobertas. |
 | R02 | Leonardo Souza Bezerra | Fazer pedido | O total estimado divergir da multiplicação entre o preço exibido e a quantidade, sem taxa, desconto ou regra de arredondamento informada. | O usuário pode não confiar no valor e desistir do pedido; o restaurante pode receber valores percebidos como incorretos. | Média | Alta | Alta | Foi observada uma diferença de R$ 0,01 entre o preço exibido e o total para duas unidades durante a exploração da Atividade 1. Como o total afeta uma decisão de compra, o impacto é alto. |
 
 ### 3.2 Aplicação das técnicas
@@ -85,7 +85,7 @@ A técnica foi escolhida porque a regra de quantidade possui grupos de entrada q
 | Inválida | Número igual a zero. | `0` | O pedido é rejeitado e informa que a quantidade deve ser maior que zero. |
 | Inválida | Número negativo. | `-1` | O pedido é rejeitado e informa que a quantidade é inválida. |
 | Inválida | Número fracionado. | `1,5` | O pedido é rejeitado por não corresponder a uma quantidade inteira. |
-| Inválida | Texto no campo de quantidade. | `"2"` | O pedido é rejeitado por não corresponder ao tipo numérico esperado para quantidade. |
+| Inválida | Texto não numérico no campo de quantidade. | `"cem"` | O pedido é rejeitado por não corresponder a uma quantidade inteira. |
 
 **Casos derivados:** CT01, CT02 e CT03.
 
@@ -159,11 +159,11 @@ Quantidade: `0`.
 **Resultado esperado:**  
 O sistema rejeita o pedido, não cria registro de pedido com quantidade zero e apresenta uma mensagem que informe que a quantidade deve ser maior que zero ou que é inválida.
 
-### CT03: Impedir pedido com quantidade informada como texto
+### CT03: Impedir pedido com quantidade informada como texto não numérico
 
 **Integrante responsável:** Leonardo Souza Bezerra  
 **Funcionalidade:** Fazer pedido  
-**Risco ou requisito relacionado:** R01 — aceitação de quantidade fora do formato esperado.  
+**Risco ou requisito relacionado:** R01 — aceitação de quantidade inválida.  
 **Técnica utilizada:** Particionamento de equivalência.
 
 **Pré-condição:**  
@@ -172,17 +172,17 @@ Usuário de teste autenticado; restaurante e item do cardápio disponíveis; fer
 **Dados de entrada:**  
 Restaurante: restaurante disponível.  
 Produto: item pertencente ao restaurante.  
-Quantidade: `"2"` como texto no corpo da requisição.
+Quantidade: `"cem"` como texto no corpo da requisição.
 
 **Passos:**
 
 1. Preparar uma requisição de criação de pedido para um item do restaurante.
-2. Informar a quantidade como texto `"2"`, mantendo o restante do corpo da requisição válido.
+2. Informar a quantidade como texto não numérico `"cem"`, mantendo o restante do corpo da requisição válido.
 3. Enviar a requisição.
 4. Consultar o código de resposta, a mensagem retornada e o histórico de pedidos.
 
 **Resultado esperado:**  
-O sistema rejeita a requisição por incompatibilidade do tipo de quantidade e não cria um novo pedido. A resposta informa, de forma compreensível, que quantity deve ser um número inteiro.
+O sistema rejeita a requisição por não conseguir interpretar a quantidade como número inteiro e não cria um novo pedido. A resposta informa, de forma compreensível, que quantity deve ser um número inteiro.
 
 ### 4.1 Matriz de rastreabilidade
 
@@ -197,6 +197,6 @@ O sistema rejeita a requisição por incompatibilidade do tipo de quantidade e n
 
 **Como foi utilizada:** Como apoio para organizar o plano de testes, formular riscos, selecionar técnicas de caixa-preta e revisar a clareza dos casos de teste e da matriz de rastreabilidade.
 
-**Uma sugestão que precisou ser alterada ou rejeitada:** A aceitação de quantidade textual como `"2"` foi inicialmente tratada apenas como conversão tolerante de entrada. Ela foi reformulada como risco de contrato da API e caso de teste, pois uma quantidade é definida como número inteiro no planejamento. O caso não afirma que a aplicação atual falha; ele define o comportamento esperado a ser verificado.
+**Uma sugestão que precisou ser alterada ou rejeitada:** A sugestão inicial de tratar a string numérica `"2"` como inválida foi rejeitada. Na exploração anterior, a API converteu esse valor para o número 2 e aceitou o pedido. Por isso, o caso foi reformulado com o texto não numérico `"cem"`, que representa uma classe inválida e foi rejeitado durante a exploração.
 
 **Como as respostas foram verificadas:** Comparei os riscos com a exploração da Atividade 1, mantive apenas fatos observados como motivação e não como resultado de teste. Conferi que há dois riscos, pelo menos uma técnica aplicada, três casos de teste, resultados esperados observáveis e cobertura de todos os riscos na matriz.
