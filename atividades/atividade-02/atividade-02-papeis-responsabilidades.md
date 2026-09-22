@@ -5,7 +5,7 @@
 **Unidade Curricular:** Qualidade de Software  
 **Metodologia:** Problem-Based Learning (PBL)  
 **Projeto:** LocalEats  
-**Turma:** A informar pelo estudante.  
+**Turma:** ads-2026-noite.  
 **Modalidade:** Individual.  
 **Data:** 20/09/2026.
 
