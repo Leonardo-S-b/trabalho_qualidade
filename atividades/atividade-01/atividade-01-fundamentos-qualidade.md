@@ -2,7 +2,7 @@
 
 ## 1. Identificação
 
-**Turma:** A informar pelo estudante.  
+**Turma:** ads-2026-noite.  
 **Modalidade:** Individual.  
 **Data:** 20/09/2026.
 
